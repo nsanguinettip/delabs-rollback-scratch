@@ -3,8 +3,8 @@ import os
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-HEALTH = 200
-MARK = None
+HEALTH = 500
+MARK = "written-by-v8"
 
 os.makedirs("/data", exist_ok=True)
 with open("/data/started", "w") as f:

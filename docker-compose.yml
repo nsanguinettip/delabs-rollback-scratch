@@ -1,0 +1,44 @@
+services:
+  worker:
+    build: ./worker
+    container_name: rbscratch-worker
+    environment:
+      SCRATCH_SECRET: ${SCRATCH_SECRET}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+  web:
+    build: ./web
+    container_name: rbscratch-web
+    depends_on:
+      worker:
+        condition: service_healthy
+    volumes:
+      - ./data:/data
+    environment:
+      SCRATCH_SECRET: ${SCRATCH_SECRET}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/live')"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    networks:
+      - default
+      - traefik
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik
+      - traefik.http.routers.rbscratch.rule=Host(`rollback-scratch.debora`)
+      - traefik.http.routers.rbscratch.entrypoints=websecure
+      - traefik.http.routers.rbscratch.tls=true
+      - traefik.http.services.rbscratch.loadbalancer.server.port=8080
+
+networks:
+  traefik:
+    external: true

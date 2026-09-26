@@ -34,7 +34,7 @@ services:
     labels:
       - traefik.enable=true
       - traefik.docker.network=traefik
-      - traefik.http.routers.rbscratch.rule=Host(`rollback-scratch.debora`)
+      - traefik.http.routers.rbscratch.rule=Host(`rollback-scratch-v5.debora`)
       - traefik.http.routers.rbscratch.entrypoints=websecure
       - traefik.http.routers.rbscratch.tls=true
       - traefik.http.services.rbscratch.loadbalancer.server.port=8080

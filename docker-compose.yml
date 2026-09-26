@@ -27,7 +27,8 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
-    restart: unless-stopped
+    restart: "no"
+    command: ["sh", "-c", "date > /data/started"]
     networks:
       - default
       - traefik

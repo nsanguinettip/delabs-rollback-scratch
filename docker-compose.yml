@@ -19,6 +19,7 @@ services:
         condition: service_healthy
     volumes:
       - ./data:/data
+      - data:/data2
     environment:
       SCRATCH_SECRET: ${SCRATCH_SECRET}
     healthcheck:
@@ -42,3 +43,7 @@ services:
 networks:
   traefik:
     external: true
+
+volumes:
+  data:
+    name: rbscratch_volume_marker

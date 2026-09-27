@@ -1,0 +1,5 @@
+FROM postgres:16-alpine
+ENV QUERY="SELECT id, a, b FROM t LIMIT 1" STRICT=1 HEALTH_CODE=200
+COPY app.sh /app.sh
+COPY migrations /migrations
+ENTRYPOINT ["/bin/sh", "/app.sh"]

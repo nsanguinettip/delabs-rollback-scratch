@@ -1,33 +1,35 @@
 services:
-  worker:
-    build: ./worker
-    container_name: rbscratch-worker
+  db:
+    image: postgres:16-alpine
     environment:
-      SCRATCH_SECRET: ${SCRATCH_SECRET}
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${SCRATCH_SECRET}
+      POSTGRES_DB: appdb
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health')"]
+      test: ["CMD-SHELL", "pg_isready -U app -d appdb"]
       interval: 5s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
+      retries: 10
+    volumes:
+      - dbdata:/var/lib/postgresql/data
     restart: unless-stopped
   web:
-    build: ./web
+    build: ./mweb
     container_name: rbscratch-web
-    depends_on:
-      worker:
-        condition: service_healthy
-    volumes:
-      - ./data:/data
     environment:
-      SCRATCH_SECRET: ${SCRATCH_SECRET}
+      PGHOST: db
+      PGUSER: app
+      PGPASSWORD: ${SCRATCH_SECRET}
+      PGDATABASE: appdb
+      RUN_MIGRATIONS: ${RUN_MIGRATIONS:-true}
+    depends_on:
+      db:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/live')"]
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/health || exit 1"]
       interval: 5s
       timeout: 3s
       retries: 3
       start_period: 5s
-    restart: unless-stopped
     networks:
       - default
       - traefik
@@ -38,7 +40,9 @@ services:
       - traefik.http.routers.rbscratch.entrypoints=websecure
       - traefik.http.routers.rbscratch.tls=true
       - traefik.http.services.rbscratch.loadbalancer.server.port=8080
-
+    restart: unless-stopped
 networks:
   traefik:
     external: true
+volumes:
+  dbdata:

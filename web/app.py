@@ -3,7 +3,7 @@ import os
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-HEALTH = 200
+HEALTH = 500 if os.environ.get("SCRATCH_MODE") == "sick" else 200
 MARK = None
 
 os.makedirs("/data", exist_ok=True)

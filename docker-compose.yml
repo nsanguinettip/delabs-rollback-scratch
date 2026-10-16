@@ -38,7 +38,7 @@ services:
       - "traefik.http.middlewares.bgs-security.headers.stsIncludeSubdomains=true"
       - "traefik.http.middlewares.bgs-security.headers.stsPreload=true"
       - "traefik.http.middlewares.bgs-security.headers.forceSTSHeader=true"
-      - "traefik.http.middlewares.bgs-security.headers.frameDeny=true"
+      - "traefik.http.middlewares.bgs-security.headers.frameDeny=false"
       - "traefik.http.middlewares.bgs-security.headers.contentTypeNosniff=true"
       - "traefik.http.middlewares.bgs-security.headers.browserXssFilter=true"
       - "traefik.http.middlewares.bgs-security.headers.referrerPolicy=strict-origin-when-cross-origin"

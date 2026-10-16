@@ -6,6 +6,8 @@ services:
         PB_FLAVOR: "${PB_FLAVOR:-plain}"
     container_name: pb-scratch-web
     restart: unless-stopped
+    ports:
+      - "127.0.0.1:9443:8080"
     environment:
       SCRATCH_FLAG: ${SCRATCH_FLAG:-none}
       DOTENV_VALUE: ${DOTENV_VALUE:-missing}

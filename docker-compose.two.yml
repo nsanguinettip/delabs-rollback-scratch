@@ -1,0 +1,5 @@
+services:
+  solo:
+    build: .
+    command: ["python", "-c", "import time; time.sleep(10**9)"]
+    stop_grace_period: 1s

@@ -2,7 +2,7 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 VERSION = "v1"
-MODE = "ok"  # ok | bad | healthfail
+MODE = "bad"  # ok | bad | healthfail
 
 
 class Handler(BaseHTTPRequestHandler):

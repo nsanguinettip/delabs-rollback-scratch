@@ -4,6 +4,7 @@ services:
       context: .
       args:
         PB_FLAVOR: "${PB_FLAVOR:-plain}"
+        PB_EXTRA: "${PB_EXTRA:-x}"
     container_name: pb-scratch-web
     restart: unless-stopped
     environment:

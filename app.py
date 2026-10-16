@@ -11,8 +11,8 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-VERSION = "v1"
-MODE = "ok"          # ok | bad | userr | slow | healthfail | flip | lateerr
+VERSION = "bad"
+MODE = "bad"          # ok | bad | userr | slow | healthfail | flip | lateerr
 FLIP_AFTER = 120     # seconds of process age after which MODE=flip answers 500 everywhere
 
 DB_PATH = os.environ.get("BGS_DB", "/data/app.db")

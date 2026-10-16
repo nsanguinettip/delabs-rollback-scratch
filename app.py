@@ -11,7 +11,7 @@ import threading
 import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
-VERSION = "v1"
+VERSION = "v3"
 MODE = "ok"          # ok | bad | userr | slow | healthfail | flip | lateerr
 FLIP_AFTER = 120     # seconds of process age after which MODE=flip answers 500 everywhere
 

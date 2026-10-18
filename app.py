@@ -40,3 +40,4 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     ThreadingHTTPServer(("0.0.0.0", 8080), Handler).serve_forever()
+# k0 nonce 20261018-015550 (dev rung: a cold layer for the K0 control)
